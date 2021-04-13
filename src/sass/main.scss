@@ -1,0 +1,384 @@
+@import "~@axioscode/axios-feta/src/feta";
+@import 'reset';
+@import "tooltipStyles";
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: auto;
+  height: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+//////////////////////////////////////////////////////////////
+// Legend and chart styles
+//////////////////////////////////////////////////////////////
+.legend-and-chart-container {
+  margin-top: 15px;
+
+  @media(max-width: 599px) {
+    margin: 0;
+  }
+}
+
+.legend {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  width: 256px;
+  // width: 319px; width with too-few image
+
+  @media(max-width: 430px) {
+    margin-bottom: 20px;
+    width: auto;
+  }
+
+  .legend-image {
+    position: relative;
+    top: 22px;
+    @media(max-width: 430px) {
+      width: 200px;
+      top: 15px;
+    }
+  }
+
+  .too-few-image {
+    position: relative;
+    margin-left: 5px;
+    top: 24px;
+    @media(max-width: 430px) {
+      width: 43px;
+    }
+  }
+
+  .tertiary-label {
+    position: absolute;
+    color: $color-text;
+    font-size: 13px;
+    font-weight: bold;
+
+    @media(max-width: 430px) {
+      top: -5px;
+      font-size: 11px;
+    }
+
+    &.left {
+      color: #008671;
+      left: 0;
+      // @media(max-width: 430px) {
+      //   left: -5px;
+      // }
+    }
+    &.center {
+      color: $color-text-light;
+      left: 29.5%;
+      text-align: center;
+      // @media(max-width: 430px) {
+      //   left: 23%;
+      // }
+    }
+    &.right {
+      color: #8c510a;
+      right: 0;
+      // @media(max-width: 430px) {
+      //   right: 52px;
+      // }
+    }
+  }
+}
+
+//////////////////////////////////////////////////////////////
+// Chart styles
+//////////////////////////////////////////////////////////////
+.chart {
+  border-top: 0.5px solid $color-gray-100;
+  display: block;
+  margin-top: 10px;
+  padding-top: 10px;
+  height: 100px;
+  width: 100%;
+
+  @media(max-width: 599px) {
+    height: 80px;
+  }
+
+  svg {
+    overflow: visible;
+  }
+
+  .axis {
+
+    text {
+      font-family: $sans;
+      fill: $color-gray-600;
+      pointer-events: none;
+    }
+
+    .tick text {
+      font-size: 10px;
+
+      @media(max-width: 599px) {
+        font-size: 9px;
+      }
+    }
+
+    line,
+    path {
+      stroke: $color-gray-100;
+      stroke-width: 0.5;
+      pointer-events: none;
+    }
+    .domain {
+      display: none;
+    }
+  }
+
+  .tertiary-label.chart-label {
+    fill: $color-text;
+    font-size: 12px;
+    text-anchor: end;
+  }
+
+  .change-text {
+    font-family: $sans;
+    font-size: 12px;
+  }
+
+  .change-line {
+    stroke: $color-gray-800;
+    stroke-width: 0.5;
+    shape-rendering: crispEdges;
+  }
+
+  .beginning-area {
+    fill: $color-gray-200;
+    stroke: $color-gray-200;
+    stroke-width: 0.25;
+  }
+
+  .end-area {
+    stroke-width: 0.25;
+  }
+
+  .dividing-line {
+    stroke-width: 0.5;
+    stroke: #fff;
+    shape-rendering: crispEdges;
+  }
+}
+
+//////////////////////////////////////////////////////////////
+// Map stuff
+//////////////////////////////////////////////////////////////
+.map {
+  position: relative;
+}
+
+.state-borders {
+  fill: none;
+  stroke: rgba(0,0,0,0.5);
+  stroke-width: 0.5;
+
+  @media(max-width: 599px) {
+    stroke: rgba(0,0,0,0.5);
+    stroke-width: 0.25;
+  }
+}
+
+.state {
+
+  &.is-active {
+    stroke: $color-gray-900;
+    stroke-width: 2;
+  }
+}
+
+.state-label-group {
+  pointer-events: none;
+
+  // Hide terroritory lables from map until we have better solution
+  &.GU,
+  &.MH,
+  &.MP,
+  &.FM,
+  &.AS,
+  &.PW,
+  &.VI,
+  &.RI,
+  &.MA,
+  &.CT,
+  &.DE {
+    display: none;
+  }
+}
+
+.state-label-countainer .state-label-group.HI text.state-annotation { // Temporary hack to get Hawaii's text to show up
+  fill: $color-text!important;
+  stroke: rgba(255, 255, 255, 0.6)!important;
+}
+
+.state-label-countainer .state-label-group.DC,
+.state-label-countainer .state-label-group.PR { // Hide PR and DC labels in the real map
+  display: none;
+}
+
+.state-annotation {
+  font-family: $sans;
+  fill: $color-text;
+  font-size: 12px;
+  text-anchor: middle;
+  paint-order: stroke;
+  stroke: rgba(255,255,255,0.6);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2px;
+
+  @media(max-width: 599px) {
+    font-size: 10px;
+  }
+
+  @media(max-width: 330px) {
+    display: none;
+  }
+}
+
+.state-label-group.tiles {
+  .state-annotation {
+    @media(max-width: 330px) {
+      display: block;
+    }
+  }
+}
+
+.interaction-instructions.tertiary-label {
+  pointer-events: none;
+  right: 14%;
+  top: 30px;
+  position: absolute;
+
+  img {
+    position: relative;
+    top: 3px;
+    margin-right: 4px;
+    @media(max-width: 599px) {
+      margin-right: 2px;
+    }
+  }
+  @media(max-width: 599px) {
+    right: 22%;
+    top: auto;
+    bottom: 0;
+    font-size: 12px;
+  }
+  @media(max-width: 280px) {
+    right: 19%;
+  }
+}
+
+//////////////////////////////////////////////////////////////
+// Default styles
+//////////////////////////////////////////////////////////////
+
+.chart-container {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+}
+
+.headline {
+  font-family: $sans;
+  font-size: 26px;
+  line-height: 34px;
+  font-weight: 400;
+  color: $color-text;
+  margin-bottom: 10px;
+
+  @media (max-width: 500px) { // Same styles as .headline--small
+    font-size: 22px;
+    line-height: 26px;
+  }
+}
+
+.headline--small {
+  font-family: $sans;
+  font-size: 22px;
+  line-height: 26px;
+  font-weight: 400;
+  color: $color-text;
+  margin-bottom: 10px;
+}
+
+.headline-units {
+  font-family: $sans;
+  font-size: 12px;
+  line-height: 18px;
+  color: $color-text-light;
+  margin-bottom: 10px;
+}
+
+.subhead {
+  font-family: $sans;
+  font-size: 14px;
+  line-height: 16px;
+  color: $color-text;
+  margin-bottom: 8px;
+
+  @media (max-width: 599px) {
+    margin-bottom: 2px;
+  }
+  @media (max-width: 320px) {
+    font-size: 12px;
+  }
+}
+
+.axis-label {
+  font-family: $mono;
+  font-size: 14px;
+  line-height: 20px;
+  color: $color-text;
+}
+
+.annotation {
+  font-family: $sans;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  color: $color-text;
+}
+
+.annotation--bold {
+  font-family: $sans;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 22px;
+  color: $color-text;
+}
+
+.annotation--number {
+  font-family: $mono;
+  font-size: 16px;
+  line-height: 22px;
+  color: $color-text;
+}
+
+.annotation--number-large {
+  font-family: $mono;
+  font-size: 24px;
+  line-height: 28px;
+  color: $color-text;
+
+  @media(max-width: 599px) {
+    font-size: 22px;
+    line-height: 22px;
+  }
+}
+
+.tertiary-label {
+  font-family: $sans;
+  font-size: 14px;
+  line-height: 20px;
+  color: $color-text-light;
+}

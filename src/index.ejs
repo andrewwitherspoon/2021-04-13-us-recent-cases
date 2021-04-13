@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta property="fullbleed" content="<%= htmlWebpackPlugin.options.isFullbleed %>" />
+  <meta property="slug" content="<%= htmlWebpackPlugin.options.project.slug %>" />
+  <link rel="icon" type="image/png" href="https://static.axios.com/img/axiosvisuals-favicon-128x128.png"
+    sizes="128x128" />
+  <meta property="apple-fallback" content="<%= htmlWebpackPlugin.options.appleFallback %>" />
+  <meta property="newsletter-fallback" content="<%= htmlWebpackPlugin.options.newsletterFallback %>" />
+  <title><%= htmlWebpackPlugin.options.title %> | Axios Visuals</title>
+</head>
+
+<body>
+  <div class="chart-container">
+    <h1 class="headline"></h1>
+    <h2 class="headline-units"></h2>
+    <div class="legend-and-chart-container">
+      <div class="legend">
+        <p class="tertiary-label left">Decreasing</p>
+        <p class="tertiary-label center">Steady</p>
+        <p class="tertiary-label right">Increasing</p>
+        <img class="legend-image" src="./img/legend.png" height="29px" width="256px">
+        <!-- <img class="too-few-image" src="./img/too-few.png" height="34px" width="52px"> -->
+      </div>
+    </div>
+    <div class="map">
+      <p class="tertiary-label interaction-instructions">
+        <img src="./img/tap-it.png" height="16px" width="18px">
+        <span>Hover</span> on state
+      </p>
+    </div>
+    <div class="chart"></div>
+    <div class="tooltip">
+      <div class="tooltip-inner">
+        <div class="tooltip-close">
+          <span class="close-icon">
+            <img src="./img/close.png" height="11px" width="11px">
+          </span>
+        </div>
+        <h4 class="tt-header annotation">
+          <span class="tt-update name" data-field="state" data-format="state"></span>
+          <p>7-day average of new cases</p>
+        </h4>
+        <div class="tt-row with-rule">
+          <span class="label"><span class="tt-update" data-field="prevDate" data-format="date"></span></span>
+          <span class="tt-update number value" data-field="prevAvg" data-format="rate"></span>
+        </div>
+        <div class="tt-row with-rule">
+          <span class="label"><span class="tt-update" data-field="currDate" data-format="date"></span></span>
+          <span class="tt-update number value currAvg" data-field="currAvg" data-format="rate"></span>
+        </div>
+        <div class="tt-row with-rule">
+          <span class="label">Change</span>
+          <span class="tt-update number value color-change" data-field="change" data-format="percent"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
