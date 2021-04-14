@@ -17,11 +17,16 @@ let stateData = require("../data/stateData.json");
 
 // data revisions
 stateTopo.objects.states.geometries.forEach(d=> {
-  // if (d.properties.st == "NY") {
-  //   d.properties.prevAvg = 8138.5;
-  //   d.properties.currAvg = 7584;
-  //   d.properties.change = -6.8;
-  // }
+  if (d.properties.st == "AL") {
+    d.properties.prevAvg = 304.8571429;
+    d.properties.currAvg = 326.1666667;
+    d.properties.change = 7.0;
+  }
+  if (d.properties.st == "OK") {
+    d.properties.prevAvg = 349.3333333;
+    d.properties.currAvg = 329.3333333;
+    d.properties.change = -5.7;
+  }
 })
 
 let parseTime = d3.timeParse("%y-%m-%d")

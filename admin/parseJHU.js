@@ -127,8 +127,20 @@ async function main(data) { // Parse data after its loaded
     d.newCases = i == 0 ? d.cases : d.cases - usData[i-1].cases;
   })
 
-  let nyRevision = dates.indexOf("3/24/21"); // 20k case NY data dump
-  usData[nyRevision].newCases = 59306;
+  ////////////////////////////////////
+  // Revisions
+  ////////////////////////////////////
+  let ny032421 = dates.indexOf("3/24/21"); // 20k case NY data dump
+  usData[ny032421].newCases = 59306;
+
+  let ok040621 = dates.indexOf("4/6/21"); // -1,294 cases in OK
+  usData[ok040621].newCases = 61838;
+
+  let ok040721 = dates.indexOf("4/7/21"); // 1,764 cases anamoly in OK
+  usData[ok040721].newCases = 73274;
+
+  let al041321 = dates.indexOf("4/13/21"); // 1,432 cases anamoly in AL
+  usData[al041321].newCases = 76446;
 
   usData.forEach((d,i)=> { // Get 7-day average
     let avg = i < 6 ? d.newCases : (usData[i].newCases + usData[i-1].newCases + usData[i-2].newCases + usData[i-3].newCases + usData[i-4].newCases + usData[i-5].newCases + usData[i-6].newCases) / 7;
